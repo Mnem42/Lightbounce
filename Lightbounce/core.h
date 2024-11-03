@@ -23,31 +23,36 @@ struct Pixel {
 	unsigned int block_type     : 9;
 };
 
-Pixel get_pixel(Pixel grid[GRID_SZ], GRID_T x, GRID_T y){
+inline Pixel get_pixel(Pixel grid[GRID_SZ], GRID_T x, GRID_T y){
 	return grid[y * GRID_X + x];
 }
 
-void set_pixel(Pixel grid[GRID_SZ], Pixel value, GRID_T x, GRID_T y) {
+inline void set_pixel(Pixel grid[GRID_SZ], Pixel value, GRID_T x, GRID_T y) {
 	grid[y * GRID_X + x];
 }
 #pragma endregion
 
 #pragma region enums for the pixels
-enum colours {
-	//Colours that aren't mixes
-	Black,
-	Red,
-	Green,
-	Blue,
-
-	//Mixes of colours
-	Orange,
-	Cyan,
-	Magenta,
-	White
+enum PixelTypes {
+	Block,
+	Light
 };
 
-enum directionalities {
+enum Colours {
+		//Colours that aren't mixes
+		Black,
+		Red,
+		Green,
+		Blue,
+
+		//Mixes of colours
+		Orange,
+		Cyan,
+		Magenta,
+		White
+	};
+
+enum Directionalities {
 	//"flat" directions
 	Left,
 	Right,
@@ -60,4 +65,80 @@ enum directionalities {
 	BottomLeft,
 	BottomRight
 };
+#pragma endregion
+
+#pragma region simulation stuff
+//Note: this does no bounds checking
+void evolve_pixel(Pixel grid[GRID_SZ], GRID_T x, GRID_T y) {
+	Pixel pixel_selected = get_pixel(grid, x, y);
+	if (pixel_selected.block_type == Light) {
+		switch (pixel_selected.directionality) {
+		case Left: {
+			grid[y * GRID_X + (x - 1)] = {
+				.is_block = 0,
+				.directionality = pixel_selected.directionality,
+				.colour = pixel_selected.colour,
+				.block_type = Light
+			};
+		}
+		case Right: {
+			grid[y * GRID_X + (x + 1)] = {
+				.is_block = 0,
+				.directionality = pixel_selected.directionality,
+				.colour = pixel_selected.colour,
+				.block_type = Light
+			};
+		}
+		case Up: {
+			grid[(y-1) * GRID_X + x] = {
+				.is_block = 0,
+				.directionality = pixel_selected.directionality,
+				.colour = pixel_selected.colour,
+				.block_type = Light
+			};
+		}
+		case Down: {
+			grid[(y+1) * GRID_X + (x + 1)] = {
+				.is_block = 0,
+				.directionality = pixel_selected.directionality,
+				.colour = pixel_selected.colour,
+				.block_type = Light
+			};
+		}
+
+		case TopLeft: {
+			grid[(y-1) * GRID_X + (x - 1)] = {
+				.is_block = 0,
+				.directionality = pixel_selected.directionality,
+				.colour = pixel_selected.colour,
+				.block_type = Light
+			};
+		}
+		case TopRight: {
+			grid[(y +1)* GRID_X + (x + 1)] = {
+				.is_block = 0,
+				.directionality = pixel_selected.directionality,
+				.colour = pixel_selected.colour,
+				.block_type = Light
+			};
+		}
+		case BottomLeft: {
+			grid[(y + 1) * GRID_X + (x-1)] = {
+				.is_block = 0,
+				.directionality = pixel_selected.directionality,
+				.colour = pixel_selected.colour,
+				.block_type = Light
+			};
+		}
+		case BottomRight: {
+			grid[(y + 1) * GRID_X + (x + 1)] = {
+				.is_block = 0,
+				.directionality = pixel_selected.directionality,
+				.colour = pixel_selected.colour,
+				.block_type = Light
+			};
+		}
+		}
+	}
+}
 #pragma endregion

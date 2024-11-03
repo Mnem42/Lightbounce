@@ -11,6 +11,10 @@ using namespace std;
 
 int main()
 {
-	cout << "Hello CMake." << endl;
+	Pixel grid[256]{};
+
+	grid[2*16+2] = {false,Left,Green,Light};
+	evolve_pixel(grid, 2, 2);
+
 	return 0;
 }
