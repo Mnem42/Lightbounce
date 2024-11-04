@@ -24,4 +24,4 @@ It would be represented as a 1d array like
 +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
 ```
 
-So acces has to be done like `grid[y*SIZE_X+x]` to get the value, rather than `grid[x][y]`
+So access has to be done like `grid[y*SIZE_X+x]` to get the value, rather than `grid[x][y]`, or with the helper functions `set_pixel()` and `get_pixel()`.

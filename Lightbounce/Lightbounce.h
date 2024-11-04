@@ -5,4 +5,9 @@
 
 #include <iostream>
 
+// The actual lib is in pure C, for reasons
+extern "C" {
+#include "core.h"
+}
+
 // TODO: Reference additional headers your program requires here.
