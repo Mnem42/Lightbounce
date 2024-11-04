@@ -1,4 +1,8 @@
 #pragma once
+#include <cmath>
+#include "static_macros.h"
+#include "pixels.h"
+#include "pixel_enums.h"
 
 //Note: this does no bounds checking
 void evolve_pixel(Pixel grid[GRID_SZ], GRID_T x, GRID_T y) {
@@ -6,69 +10,77 @@ void evolve_pixel(Pixel grid[GRID_SZ], GRID_T x, GRID_T y) {
 	if (pixel_selected.block_type == Light) {
 		switch (pixel_selected.directionality) {
 		case Left: {
-			grid[y * GRID_X + (x - 1)] = {
+			grid[get_index(x-1,y)] = {
 				.is_block = 0,
 				.directionality = pixel_selected.directionality,
 				.colour = pixel_selected.colour,
 				.block_type = Light
 			};
+			break;
 		}
 		case Right: {
-			grid[y * GRID_X + (x + 1)] = {
+			grid[get_index(x+1,y)] = {
 				.is_block = 0,
 				.directionality = pixel_selected.directionality,
 				.colour = pixel_selected.colour,
 				.block_type = Light
 			};
+			break;
 		}
 		case Up: {
-			grid[(y - 1) * GRID_X + x] = {
+			grid[get_index(x,y-1)] = {
 				.is_block = 0,
 				.directionality = pixel_selected.directionality,
 				.colour = pixel_selected.colour,
 				.block_type = Light
 			};
+			break;
 		}
 		case Down: {
-			grid[(y + 1) * GRID_X + (x + 1)] = {
+			grid[get_index(x,y+1)] = {
 				.is_block = 0,
 				.directionality = pixel_selected.directionality,
 				.colour = pixel_selected.colour,
 				.block_type = Light
 			};
+			break;
 		}
 
 		case TopLeft: {
-			grid[(y - 1) * GRID_X + (x - 1)] = {
+			grid[get_index(x-1,y-1)] = {
 				.is_block = 0,
 				.directionality = pixel_selected.directionality,
 				.colour = pixel_selected.colour,
 				.block_type = Light
 			};
+			break;
 		}
 		case TopRight: {
-			grid[(y + 1) * GRID_X + (x + 1)] = {
+			grid[get_index(x-1,y+1)] = {
 				.is_block = 0,
 				.directionality = pixel_selected.directionality,
 				.colour = pixel_selected.colour,
 				.block_type = Light
 			};
+			break;
 		}
 		case BottomLeft: {
-			grid[(y + 1) * GRID_X + (x - 1)] = {
+			grid[get_index(x-1,y+1)] = {
 				.is_block = 0,
 				.directionality = pixel_selected.directionality,
 				.colour = pixel_selected.colour,
 				.block_type = Light
 			};
+			break;
 		}
 		case BottomRight: {
-			grid[(y + 1) * GRID_X + (x + 1)] = {
+			grid[get_index(x+1,y+1)] = {
 				.is_block = 0,
 				.directionality = pixel_selected.directionality,
 				.colour = pixel_selected.colour,
 				.block_type = Light
 			};
+			break;
 		}
 		}
 	}

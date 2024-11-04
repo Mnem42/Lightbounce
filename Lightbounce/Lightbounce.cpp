@@ -7,10 +7,17 @@ using namespace std;
 
 int main()
 {
-	Pixel grid[256]{};
+	lightbounce_lib::Pixel grid[GRID_SZ]{};
 
-	grid[2*16+2] = {false,BottomLeft,Green,Light};
-	evolve_pixel(grid, 2, 2);
+	grid[1*GRID_X+1] = {false,lightbounce_lib::BottomRight,lightbounce_lib::Green,lightbounce_lib::Light};
+	
+	for (int n = 0; n < 100;n++) {
+		for (int x = 0; x < (GRID_X); x++) {
+			for (int y = 0; y < (GRID_Y); y++) {
+				lightbounce_lib::evolve_pixel(grid, x, y);
+			}
+		}
+	}
 
 	return 0;
 }
