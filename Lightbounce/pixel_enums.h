@@ -1,6 +1,7 @@
 #pragma once
 
 enum PixelTypes {
+	Null,
 	Block,
 	Light
 };

@@ -14,3 +14,8 @@
 #ifndef GRID_SZ
 #define GRID_SZ GRID_X*GRID_Y
 #endif
+
+#ifndef UNIQUE_BLOCK_COUNT
+#define UNIQUE_BLOCK_COUNT 16
+#pragma warning "It's a good idea to set UNIQUE_BLOCK_COUNT manually"
+#endif

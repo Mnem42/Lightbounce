@@ -4,8 +4,15 @@
 #include "pixels.h"
 #include "pixel_enums.h"
 
+typedef void(*Blockcb)(GRID_T x, GRID_T y, Pixel grid[GRID_SZ],Pixel block_px);
+struct BlockDataEntry {
+	Blockcb callback;
+};
+typedef BlockDataEntry BlockcbSet[UNIQUE_BLOCK_COUNT];
+typedef uint8_t err_t;
+
 //Note: this does no bounds checking
-void evolve_pixel(Pixel grid[GRID_SZ], GRID_T x, GRID_T y) {
+err_t evolve_pixel(Pixel grid[GRID_SZ], GRID_T x, GRID_T y, BlockcbSet block_cb_set) {
 	Pixel pixel_selected = get_pixel(grid, x, y);
 	if (pixel_selected.block_type == Light) {
 		switch (pixel_selected.directionality) {
@@ -84,4 +91,15 @@ void evolve_pixel(Pixel grid[GRID_SZ], GRID_T x, GRID_T y) {
 		}
 		}
 	}
+	if (pixel_selected.block_type == Block) {
+		if (pixel_selected.block_type > UNIQUE_BLOCK_COUNT||
+			block_cb_set[pixel_selected.block_type].callback == NULL) {
+			return 1;
+		}
+		else {
+			block_cb_set[pixel_selected.block_type]
+				.callback(x, y, grid, pixel_selected);
+		}
+	}
+	return 0;
 }
