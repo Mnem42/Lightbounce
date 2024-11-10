@@ -5,6 +5,10 @@
 
 using namespace std;
 
+void block_tes(GRID_T x, GRID_T y, lightbounce_lib::Pixel grid[GRID_SZ], lightbounce_lib::Pixel block_px) {
+
+}
+
 int main()
 {
 	lightbounce_lib::Pixel grid[GRID_SZ]{};

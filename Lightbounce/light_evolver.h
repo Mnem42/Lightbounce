@@ -8,11 +8,11 @@ typedef void(*Blockcb)(GRID_T x, GRID_T y, Pixel grid[GRID_SZ],Pixel block_px);
 struct BlockDataEntry {
 	Blockcb callback;
 };
-typedef BlockDataEntry BlockcbSet[UNIQUE_BLOCK_COUNT];
+typedef BlockDataEntry BlockDataSet[UNIQUE_BLOCK_COUNT];
 typedef uint8_t err_t;
 
 //Note: this does no bounds checking
-err_t evolve_pixel(Pixel grid[GRID_SZ], GRID_T x, GRID_T y, BlockcbSet block_cb_set) {
+err_t evolve_pixel(Pixel grid[GRID_SZ], GRID_T x, GRID_T y, BlockDataSet block_cb_set) {
 	Pixel pixel_selected = get_pixel(grid, x, y);
 	if (pixel_selected.block_type == Light) {
 		switch (pixel_selected.directionality) {
